@@ -1,6 +1,6 @@
 # IDOR (Insecure Direct Object Reference)
 
-> 진행 상태: 첫 실습 완료 (2026-10-14). 브라우저 주소창에서 `id`를 바꿔 결과를 확인했습니다.
+> 진행 상태: 첫 실습 완료, GUID 실습 과정 기록 (2026-10-14).
 
 ## 한 문장으로 설명
 
@@ -14,6 +14,7 @@
 - **인가(Authorization):** 그 사람이 **이 데이터에** 접근하거나 **이 작업을** 할 수 있는지 확인하는 과정입니다.
 - **JSON:** 요청 본문에 데이터를 담는 형식 중 하나입니다. `{"id": 123}`처럼 키와 값으로 표현합니다.
 - **Query parameter:** URL의 `?` 뒤에 붙는 `이름=값` 형식의 값입니다. `/my-account?id=wiener`에서 `id`가 그 예입니다.
+- **GUID (Globally Unique Identifier):** 대상을 구별하는 긴 식별자입니다. 이번 실습에서는 사용자 이름 대신 GUID가 `id` 값으로 쓰였습니다. 값이 길고 추측하기 어려워도 접근 권한을 증명하지는 않습니다.
 
 ## 정상 동작과 취약한 동작
 
@@ -42,11 +43,24 @@
 
 **배운 점:** URL의 `id`는 누구의 정보를 요청할지 정하는 값일 뿐, 접근 권한을 증명하지 않습니다. 서버가 로그인한 사용자와 요청 대상의 권한 관계를 확인하지 않아 다른 사용자의 정보가 노출됐습니다. 이 실습에서는 브라우저 주소창만 사용했고, Burp Suite로 HTTP request나 쿠키 값을 직접 확인하지는 않았습니다. 실제 API Key·세션 값·실습 인스턴스 주소는 기록하지 않습니다.
 
+## 두 번째 실습: GUID로 표시된 사용자 ID
+
+- 환경: [PortSwigger — User ID controlled by request parameter, with unpredictable user IDs](https://portswigger.net/web-security/access-control/lab-user-id-controlled-by-request-parameter-with-unpredictable-user-ids)
+- 목표: Carlos의 GUID를 찾아, `wiener`로 로그인한 상태에서 Carlos의 계정 정보에 접근할 수 있는지 확인합니다.
+- 진행 상태: Carlos 작성자 링크에서 GUID를 찾아 계정 페이지의 `id`에 적용했습니다. 화면의 `Solved` 표시 여부는 아직 확인하지 못했습니다.
+
+### 내가 한 과정
+
+1. 실습 사이트에서 Carlos가 작성한 글을 찾고, **작성자 Carlos의 링크**를 열어 주소에 드러난 GUID를 확인했습니다.
+2. 로그인 화면으로 돌아가 실습용 `wiener` 계정으로 로그인했습니다.
+3. 내 계정 페이지 주소의 `id` 값을 Carlos의 작성자 링크에서 확인한 GUID로 바꿔 접속했습니다. GUID를 로그인 입력칸에 넣은 것이 아니라, 계정 페이지의 URL에 있는 `id` 값으로 사용했습니다.
+
+**배운 점:** GUID를 무작정 추측할 수 없어도, 사이트의 다른 페이지에서 공개된 식별자를 찾아 사용할 수 있습니다. GUID가 길다는 사실은 서버의 인가(Authorization) 검사를 대신하지 않습니다. 실습 인스턴스의 실제 GUID·API Key·세션 값은 기록하지 않습니다.
+
 ### 다음 허가된 실습 (아직 시도하지 않음)
 
-1. [User ID controlled by request parameter, with unpredictable user IDs](https://portswigger.net/web-security/access-control/lab-user-id-controlled-by-request-parameter-with-unpredictable-user-ids) — 다른 사람의 ID가 GUID처럼 길어도, 사이트 안에서 그 값을 찾은 뒤 권한 검사를 확인합니다.
-2. [User ID controlled by request parameter with password disclosure](https://portswigger.net/web-security/access-control/lab-user-id-controlled-by-request-parameter-with-password-disclosure) — 비슷한 URL 변경이 더 민감한 정보 노출로 이어지는 사례를 살펴봅니다. Burp로 응답을 읽는 연습이 필요합니다.
-3. [User role can be modified in user profile](https://portswigger.net/web-security/access-control/lab-user-role-can-be-modified-in-user-profile) — 주소창만으로는 보이지 않는 JSON 요청 본문을 Burp로 수정하는 연습입니다. 현재 실습보다 한 단계 어렵습니다.
+1. [User ID controlled by request parameter with password disclosure](https://portswigger.net/web-security/access-control/lab-user-id-controlled-by-request-parameter-with-password-disclosure) — 비슷한 URL 변경이 더 민감한 정보 노출로 이어지는 사례를 살펴봅니다. Burp로 응답을 읽는 연습이 필요합니다.
+2. [User role can be modified in user profile](https://portswigger.net/web-security/access-control/lab-user-role-can-be-modified-in-user-profile) — 주소창만으로는 보이지 않는 JSON 요청 본문을 Burp로 수정하는 연습입니다. 현재 실습보다 한 단계 어렵습니다.
 
 ## 원인과 대응
 
