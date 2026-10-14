@@ -79,9 +79,9 @@
 - **“이미 전달된 값”이란?** 이 실습에서는 서버가 관리자 계정 페이지의 비밀번호 값을 브라우저에 보냈습니다. Elements에서 표시 방식을 바꾸자 브라우저가 가진 값이 보였습니다. 검사 기능 자체가 서버의 권한 검사를 우회한 것은 아닙니다.
 - **진짜 문제는 무엇인가?** `wiener`로 로그인한 요청에 서버가 administrator의 계정 정보와 비밀번호를 제공한 접근 제어 문제입니다. 이 화면만으로 서버가 비밀번호를 어떤 방식으로 저장하는지는 알 수 없습니다.
 
-### 다음 허가된 실습 (아직 시도하지 않음)
+### 이어서 진행한 허가된 실습
 
-- [User role can be modified in user profile](https://portswigger.net/web-security/access-control/lab-user-role-can-be-modified-in-user-profile) — 주소창만으로는 보이지 않는 JSON 요청 본문을 Burp로 수정하는 연습입니다. 현재 실습보다 한 단계 어렵습니다.
+- [User role can be modified in user profile](role-escalation.md) — 이메일 변경 요청 본문에 `roleid`를 추가해 권한 상승을 확인한 별도 기록입니다. 이는 다른 계정의 객체 식별자를 바꾸는 IDOR과 구분합니다.
 
 ## 원인과 대응
 
