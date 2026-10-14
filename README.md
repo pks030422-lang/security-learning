@@ -6,7 +6,7 @@
 
 | 주제 | 진행 상태 |
 | --- | --- |
-| [IDOR](vulnerabilities/idor.md) | 개념 학습 중 · 실습 결과는 아직 기록하지 않음 |
+| [IDOR](vulnerabilities/idor.md) | PortSwigger 입문 실습 1개 완료 · 다음 실습 3개 선정 |
 
 ## 기록 원칙
 
