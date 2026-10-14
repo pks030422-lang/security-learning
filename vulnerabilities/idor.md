@@ -1,6 +1,6 @@
 # IDOR (Insecure Direct Object Reference)
 
-> 진행 상태: 첫 실습 완료, GUID 실습 과정 기록 (2026-10-14).
+> 진행 상태: 첫 실습 완료, GUID·비밀번호 노출 실습 과정 기록 (2026-10-14).
 
 ## 한 문장으로 설명
 
@@ -15,6 +15,8 @@
 - **JSON:** 요청 본문에 데이터를 담는 형식 중 하나입니다. `{"id": 123}`처럼 키와 값으로 표현합니다.
 - **Query parameter:** URL의 `?` 뒤에 붙는 `이름=값` 형식의 값입니다. `/my-account?id=wiener`에서 `id`가 그 예입니다.
 - **GUID (Globally Unique Identifier):** 대상을 구별하는 긴 식별자입니다. 이번 실습에서는 사용자 이름 대신 GUID가 `id` 값으로 쓰였습니다. 값이 길고 추측하기 어려워도 접근 권한을 증명하지는 않습니다.
+- **Elements / DOM:** 브라우저 개발자 도구의 Elements는 현재 페이지를 구성하는 HTML 요소와 속성을 보여줍니다. 여기서 바꾼 내용은 내 브라우저 화면에만 적용됩니다.
+- **`type="password"`:** 입력칸의 값을 점으로 가려 보여주는 HTML 설정입니다. 값 자체를 암호화하는 기능은 아닙니다.
 
 ## 정상 동작과 취약한 동작
 
@@ -57,10 +59,29 @@
 
 **배운 점:** GUID를 무작정 추측할 수 없어도, 사이트의 다른 페이지에서 공개된 식별자를 찾아 사용할 수 있습니다. GUID가 길다는 사실은 서버의 인가(Authorization) 검사를 대신하지 않습니다. 실습 인스턴스의 실제 GUID·API Key·세션 값은 기록하지 않습니다.
 
+## 세 번째 실습: 계정 페이지의 비밀번호 노출
+
+- 환경: [PortSwigger — User ID controlled by request parameter with password disclosure](https://portswigger.net/web-security/access-control/lab-user-id-controlled-by-request-parameter-with-password-disclosure)
+- 실습 목표: `administrator`의 비밀번호를 알아내 관리자 계정으로 로그인한 뒤 Carlos를 삭제합니다.
+- 진행 상태: 비밀번호 입력칸을 검사한 과정과 배운 점을 기록했습니다. `Solved` 표시 여부는 아직 확인하지 못했습니다.
+
+### 내가 한 과정
+
+1. 실습용 `wiener` 계정으로 로그인하고 계정 페이지의 `id`를 다른 사용자로 바꿔 보았습니다. 처음에는 Carlos 계정의 Password 칸이 점으로 가려진 것을 확인했습니다.
+2. 실습 목표가 Carlos의 비밀번호가 아니라 **administrator의 비밀번호**라는 것을 확인하고, 주소의 `id`를 `administrator`로 바꿨습니다.
+3. Password 칸을 오른쪽 클릭해 **검사(Inspect)**를 열었습니다. Elements에서 해당 입력칸의 `type="password"`를 `type="text"`로 바꿔, 브라우저에 이미 들어 있던 값을 글자로 확인했습니다. 실제 비밀번호는 기록하지 않습니다.
+
+### 내가 했던 질문과 알게 된 점
+
+- **왜 Elements를 열었나?** Password 입력칸이 어떤 HTML 요소이고, 값을 어떻게 표시하도록 설정됐는지 확인하기 위해서입니다.
+- **코드를 수정해서 비밀번호를 찾은 건가?** 내 브라우저의 DOM에서 입력칸의 `type` 속성만 바꿨습니다. 서버의 코드나 계정 데이터는 수정하지 않았고, 새로고침하면 이 표시 변경은 사라집니다.
+- **점으로 보이는 비밀번호는 암호화된 건가?** 아닙니다. `type="password"`가 화면에서 문자를 가려 보여준 것입니다. `type="text"`로 바꾸는 것은 복호화가 아닙니다.
+- **“이미 전달된 값”이란?** 이 실습에서는 서버가 관리자 계정 페이지의 비밀번호 값을 브라우저에 보냈습니다. Elements에서 표시 방식을 바꾸자 브라우저가 가진 값이 보였습니다. 검사 기능 자체가 서버의 권한 검사를 우회한 것은 아닙니다.
+- **진짜 문제는 무엇인가?** `wiener`로 로그인한 요청에 서버가 administrator의 계정 정보와 비밀번호를 제공한 접근 제어 문제입니다. 이 화면만으로 서버가 비밀번호를 어떤 방식으로 저장하는지는 알 수 없습니다.
+
 ### 다음 허가된 실습 (아직 시도하지 않음)
 
-1. [User ID controlled by request parameter with password disclosure](https://portswigger.net/web-security/access-control/lab-user-id-controlled-by-request-parameter-with-password-disclosure) — 비슷한 URL 변경이 더 민감한 정보 노출로 이어지는 사례를 살펴봅니다. Burp로 응답을 읽는 연습이 필요합니다.
-2. [User role can be modified in user profile](https://portswigger.net/web-security/access-control/lab-user-role-can-be-modified-in-user-profile) — 주소창만으로는 보이지 않는 JSON 요청 본문을 Burp로 수정하는 연습입니다. 현재 실습보다 한 단계 어렵습니다.
+- [User role can be modified in user profile](https://portswigger.net/web-security/access-control/lab-user-role-can-be-modified-in-user-profile) — 주소창만으로는 보이지 않는 JSON 요청 본문을 Burp로 수정하는 연습입니다. 현재 실습보다 한 단계 어렵습니다.
 
 ## 원인과 대응
 

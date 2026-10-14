@@ -6,7 +6,7 @@
 
 | 주제 | 진행 상태 |
 | --- | --- |
-| [IDOR](vulnerabilities/idor.md) | PortSwigger 입문 실습 1개 완료 · GUID 실습 과정 기록 |
+| [IDOR](vulnerabilities/idor.md) | PortSwigger 입문 실습 1개 완료 · GUID·비밀번호 노출 실습 과정 기록 |
 
 ## 기록 원칙
 
