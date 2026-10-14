@@ -69,7 +69,7 @@
 
 1. 실습용 `wiener` 계정으로 로그인하고 계정 페이지의 `id`를 다른 사용자로 바꿔 보았습니다. 처음에는 Carlos 계정의 Password 칸이 점으로 가려진 것을 확인했습니다.
 2. 실습 목표가 Carlos의 비밀번호가 아니라 **administrator의 비밀번호**라는 것을 확인하고, 주소의 `id`를 `administrator`로 바꿨습니다.
-3. Password 칸을 오른쪽 클릭해 **검사(Inspect)**를 열었습니다. Elements에서 해당 입력칸의 `type="password"`를 `type="text"`로 바꿔, 브라우저에 이미 들어 있던 값을 글자로 확인했습니다. 실제 비밀번호는 기록하지 않습니다.
+3. Password 칸을 오른쪽 클릭해 검사(Inspect)를 열었습니다. Elements에서 해당 입력칸의 `type="password"`를 `type="text"`로 바꿔, 브라우저에 이미 들어 있던 값을 글자로 확인했습니다. 실제 비밀번호는 기록하지 않습니다.
 
 ### 내가 했던 질문과 알게 된 점
 
