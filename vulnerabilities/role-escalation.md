@@ -19,6 +19,15 @@
 5. 복사한 코드의 `body`에 `roleid`를 추가하는 방법을 익혔습니다. 원래 JSON 문자열을 직접 고치거나 `JSON.stringify`로 같은 본문을 만들 수 있습니다.
 6. 사용자 확인에 따르면 실습 목표까지 완료했습니다. 요청 실행 시점의 응답 전문은 이 기록에 보관하지 않았습니다.
 
+### 단계마다 왜 그렇게 했나?
+
+1. **왜 먼저 이메일 변경 기능을 사용했나?** 사이트가 정상적으로 보내는 요청을 하나 만들기 위해서입니다. 정상 요청을 보아야 주소, 메서드, 본문 형식을 추측하지 않고 알 수 있습니다.
+2. **왜 Network에서 변경 요청을 찾았나?** 화면의 이메일 입력칸은 서버에 어떤 HTTP 요청이 전달되는지 전부 보여주지 않습니다. `POST /my-account/change-email`을 찾으면 실제 전송 위치를 확인할 수 있습니다.
+3. **왜 Payload의 `email`을 봤나?** 바꾸려는 값이 URL이 아니라 **요청 본문**에 담기는지 확인하기 위해서입니다. `roleid`를 시험하려면 이 본문에 필드를 추가해야 합니다.
+4. **왜 Response와 `302`를 확인했나?** 서버가 요청을 어떻게 처리했는지 판단하려고 했습니다. `302`는 다른 페이지로 이동하라는 응답이므로 본문이 Chrome에 보이지 않을 수 있습니다. 본문이 안 보인다고 변경 성공이나 실패를 단정할 수 없습니다.
+5. **왜 `fetch로 복사`한 뒤 본문을 수정했나?** Chrome에서 관찰한 요청의 주소·메서드 등을 재사용해 `roleid`만 추가한 요청을 다시 보내려는 목적입니다. 복사는 준비 단계이고 Console에서 실행해야 전송됩니다. `JSON.stringify`는 본문 문자열을 만들기 편하게 해 줄 뿐 필수는 아닙니다.
+6. **왜 마지막에 관리자 기능을 확인했나?** 요청에 `roleid`를 넣을 수 있어도 서버가 무시할 수 있습니다. 실제 권한 변화와 실습 목표 달성을 확인해야 취약점의 영향을 말할 수 있습니다. 사용자가 전체 완료를 확인했으나, 당시 응답 전문은 저장하지 않았습니다.
+
 ## 이해에 필요한 개념
 
 | 개념 | 이 실습에서의 의미 |
@@ -81,7 +90,7 @@ body: JSON.stringify({email: "example@example.com", roleid: 2})
 
 ## 관련 CTF·실습 문제 (아직 시도하지 않음)
 
-1. **[PortSwigger — Unprotected admin functionality](https://portswigger.net/web-security/access-control/lab-unprotected-admin-functionality)**: 관리자 기능이 공개되어 있는지 확인하는 입문 문제입니다. 요청 본문 편집 전 단계로, URL과 서버의 권한 검사를 연습합니다.
+1. **[PortSwigger — Unprotected admin functionality](https://portswigger.net/web-security/access-control/lab-unprotected-admin-functionality)**: 관리자 기능이 공개되어 있는지 확인하는 입문 문제입니다. `/robots.txt` 단서와 관리자 경로에 관해 질문하며 탐색했고, 완료 여부는 확인하지 않았습니다. **왜 `/robots.txt`를 봤나?** 사이트가 검색 엔진에 방문하지 말라고 알리는 경로가 적혀 있을 수 있어 관리자 경로를 발견하는 단서가 됩니다. **왜 경로를 발견한 뒤에도 접속 결과를 확인해야 하나?** 경로를 아는 것과 그 기능을 사용할 권한이 있는 것은 별개입니다. 서버가 비관리자에게도 기능을 허용하는지 확인해야 합니다. 단서 확인·접속·문제 완료 중 무엇을 실제로 수행했는지는 이 대화 기록만으로 확정하지 않았습니다.
 2. **[PortSwigger — User role controlled by request parameter](https://portswigger.net/web-security/access-control/lab-user-role-controlled-by-request-parameter)**: 관리자 여부를 조작 가능한 쿠키로 판단하는 실습입니다. 이번 문제와 똑같은 `roleid` 본문 문제는 아니지만, 클라이언트 값을 신뢰하면 어떻게 권한 상승이 생기는지 비교하기 좋습니다.
 3. **[OWASP Juice Shop — Admin Registration](https://help.owasp-juice.shop/part2/improper-input-validation.html#register-as-a-user-with-administrator-privileges)**: 일반 사용자 가입 요청에 예상하지 않은 역할 필드를 넣어 관리자 권한 등록을 시험하는 CTF형 문제입니다. 공식 가이드 기준 난이도 3성입니다. 이번 문제와 가장 비슷한 요청 본문 수정 연습입니다.
 

@@ -6,7 +6,7 @@
 
 | 주제 | 진행 상태 |
 | --- | --- |
-| [IDOR](vulnerabilities/idor.md) | PortSwigger 입문 실습 1개 완료 · GUID·비밀번호 노출 실습 과정 기록 |
+| [IDOR](vulnerabilities/idor.md) | PortSwigger 입문 실습 1개 완료 · GUID·비밀번호 노출 및 Juice Shop 장바구니 과정·질문 기록 |
 | [요청 본문을 통한 권한 상승](vulnerabilities/role-escalation.md) | `roleid` 실습 완료(본인 확인) · HTTP 요청 수정과 후속 CTF 기록 |
 
 ## 기록 원칙
