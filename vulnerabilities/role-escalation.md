@@ -88,11 +88,11 @@ body: JSON.stringify({email: "example@example.com", roleid: 2})
 
 세 방법 모두 서버에 보내는 **HTTP 요청 본문을 바꾼다**는 점은 같습니다. URL만 수정하거나 Elements에서 화면의 HTML만 바꾸는 것으로는 이 실습의 요청 본문을 바꾸지 못합니다.
 
-## 관련 CTF·실습 문제 (아직 시도하지 않음)
+## 관련 CTF·실습 문제
 
-1. **[PortSwigger — Unprotected admin functionality](https://portswigger.net/web-security/access-control/lab-unprotected-admin-functionality)**: 관리자 기능이 공개되어 있는지 확인하는 입문 문제입니다. `/robots.txt` 단서와 관리자 경로에 관해 질문하며 탐색했고, 완료 여부는 확인하지 않았습니다. **왜 `/robots.txt`를 봤나?** 사이트가 검색 엔진에 방문하지 말라고 알리는 경로가 적혀 있을 수 있어 관리자 경로를 발견하는 단서가 됩니다. **왜 경로를 발견한 뒤에도 접속 결과를 확인해야 하나?** 경로를 아는 것과 그 기능을 사용할 권한이 있는 것은 별개입니다. 서버가 비관리자에게도 기능을 허용하는지 확인해야 합니다. 단서 확인·접속·문제 완료 중 무엇을 실제로 수행했는지는 이 대화 기록만으로 확정하지 않았습니다.
-2. **[PortSwigger — User role controlled by request parameter](https://portswigger.net/web-security/access-control/lab-user-role-controlled-by-request-parameter)**: 관리자 여부를 조작 가능한 쿠키로 판단하는 실습입니다. 이번 문제와 똑같은 `roleid` 본문 문제는 아니지만, 클라이언트 값을 신뢰하면 어떻게 권한 상승이 생기는지 비교하기 좋습니다.
-3. **[OWASP Juice Shop — Admin Registration](https://help.owasp-juice.shop/part2/improper-input-validation.html#register-as-a-user-with-administrator-privileges)**: 일반 사용자 가입 요청에 예상하지 않은 역할 필드를 넣어 관리자 권한 등록을 시험하는 CTF형 문제입니다. 공식 가이드 기준 난이도 3성입니다. 이번 문제와 가장 비슷한 요청 본문 수정 연습입니다.
+1. **[PortSwigger — Unprotected admin functionality](https://portswigger.net/web-security/access-control/lab-unprotected-admin-functionality)**: 완료(2026-10-15 사용자 확인). 관리자 기능이 공개되어 있는지 확인하는 입문 문제입니다. `/robots.txt` 단서와 관리자 경로에 관해 질문하며 탐색했습니다. **왜 `/robots.txt`를 봤나?** 사이트가 검색 엔진에 방문하지 말라고 알리는 경로가 적혀 있을 수 있어 관리자 경로를 발견하는 단서가 됩니다. **왜 경로를 발견한 뒤에도 접속 결과를 확인해야 하나?** 경로를 아는 것과 그 기능을 사용할 권한이 있는 것은 별개입니다. 서버가 비관리자에게도 기능을 허용하는지 확인해야 합니다. 당시 요청·응답 화면은 이 메모에 보관하지 않았습니다.
+2. **[PortSwigger — User role controlled by request parameter](https://portswigger.net/web-security/access-control/lab-user-role-controlled-by-request-parameter)**: 완료(2026-10-15 사용자 확인). 관리자 여부를 조작 가능한 쿠키로 판단하는 실습입니다. 이번 문제와 똑같은 `roleid` 본문 문제는 아니지만, 클라이언트 값을 신뢰하면 어떻게 권한 상승이 생기는지 비교하기 좋습니다. 구체적인 수행 과정은 이 대화에 남아 있지 않습니다.
+3. **[OWASP Juice Shop — Admin Registration](https://help.owasp-juice.shop/part2/improper-input-validation.html#register-as-a-user-with-administrator-privileges)**: 완료(2026-10-15 사용자 확인). 일반 사용자 가입 요청에 예상하지 않은 역할 필드를 넣어 관리자 권한 등록을 시험하는 CTF형 문제입니다. 공식 가이드 기준 난이도 3성입니다. 이번 문제와 가장 비슷한 요청 본문 수정 연습입니다. 구체적인 수행 과정은 이 대화에 남아 있지 않습니다.
 
 **추천 순서:** 1 → 2 → 3. 앞의 둘은 PortSwigger 랩이고, 마지막은 OWASP Juice Shop의 점수판 문제입니다. 풀이를 보기 전에 정상 요청·수정한 값·서버 반응을 세 줄로 먼저 적어봅니다.
 
